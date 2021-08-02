@@ -9,19 +9,19 @@
  *
  */
 
-const SITE_URL = "https://nextjs-contentful-blog-starter.vercel.app";
+const SITE_URL = "https://www.guidedogs.org.uk";
 
 export const Config = {
   site: {
-    owner: "A. Blogger",
-    title: "My new Next.js + Contentful blog site",
-    domain: "nextjs-contentful-blog-starter.vercel.app",
-    email: "example@example.com",
-    feedDescription: "RSS Feed for example.com",
+    owner: "Guide Dogs UK",
+    title: "Guide Dogs UK Blog",
+    domain: "guidedogs.org.uk",
+    email: "jason.fang@guidedogs.org.uk",
+    feedDescription: "RSS Feed for guidedogs.org.uk",
   },
   pageMeta: {
     openGraph: {
-      twitterUser: "contentful",
+      twitterUser: "guidedogs",
     },
     home: {
       url: SITE_URL,
