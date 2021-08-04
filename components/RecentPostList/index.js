@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import RecentPostListStyles from "@styles/RecentPostList.module.css";
@@ -10,6 +11,8 @@ import ReactMarkdownRenderers from "@utils/ReactMarkdownRenderers";
 
 export default function RecentPostList(props) {
   const { posts } = props;
+  console.log(props);
+
   return (
     <>
       <h2 className={RecentPostListStyles.recentPostList__header}>
@@ -27,13 +30,23 @@ export default function RecentPostList(props) {
                   </h2>
                 </a>
               </Link>
-              {post.tags !== null && <Tags tags={post.tags} />}
+              
               <div className={ContentListStyles.contentList__excerpt}>
                 <ReactMarkdown
                   children={post.excerpt}
                   renderers={ReactMarkdownRenderers(post.excerpt)}
                 />
               </div>
+          
+              <div>
+              <Image
+                src={post.image.url}
+                width="1200"
+                height="400"
+                layout="responsive"/>
+
+              </div>
+              {post.tags !== null && <Tags tags={post.tags} />}
             </article>
           </li>
         ))}

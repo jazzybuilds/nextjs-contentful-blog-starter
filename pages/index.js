@@ -26,9 +26,7 @@ export default function Home(props) {
           url={Config.pageMeta.home.url}
         />
 
-        {pageContent && pageContent.heroBanner !== null && (
-          <HeroBanner data={pageContent.heroBanner} />
-        )}
+      
 
         <ContentWrapper>
           {pageContent && pageContent.body && (
@@ -61,3 +59,14 @@ export async function getStaticProps({ preview = false }) {
     },
   };
 }
+
+
+
+/*
+
+  {pageContent && pageContent.heroBanner !== null && (
+          <HeroBanner data={pageContent.heroBanner} />
+        )}
+
+        */
+       

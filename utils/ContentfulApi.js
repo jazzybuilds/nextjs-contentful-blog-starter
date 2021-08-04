@@ -496,6 +496,16 @@ export default class ContentfulApi {
     const query = `{
       blogPostCollection(limit: ${Config.pagination.recentPostsSize}, order: date_DESC) {
         items {
+          image {
+            title
+            description
+            contentType
+            fileName
+            size
+            url
+            width
+            height
+          }
           sys {
             id
           }
@@ -504,6 +514,7 @@ export default class ContentfulApi {
           slug
           excerpt
           tags
+         
         }
       }
     }`;
@@ -513,7 +524,7 @@ export default class ContentfulApi {
     const recentPosts = response.data.blogPostCollection.items
       ? response.data.blogPostCollection.items
       : [];
-
+    console.log(recentPosts);
     return recentPosts;
   }
 
