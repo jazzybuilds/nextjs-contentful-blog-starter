@@ -9,14 +9,10 @@ import MainLayout from "@layouts/main";
 import ContentWrapper from "@components/ContentWrapper";
 import PageContentWrapper from "@components/PageContentWrapper";
 import HeroBanner from "@components/HeroBanner";
-import FuzzySearch from "@components/FuzzySearch";
 
 export default function BlogIndex(props) {
   const { postSummaries, currentPage, totalPages, pageContent, preview } =
     props;
-
-  // Internal State to track the search results of the fuzzy search.
-  const [posts, setPosts] = React.useState(postSummaries);
 
   /**
    * This provides some fallback values to PageMeta so that a pageContent
@@ -40,17 +36,13 @@ export default function BlogIndex(props) {
       )}
 
       <ContentWrapper>
-        <FuzzySearch onChange={setPosts} posts={posts} />
         {pageContent.body && (
           <PageContentWrapper>
             <RichTextPageContent richTextBodyField={pageContent.body} />
           </PageContentWrapper>
         )}
         <PostList
-          // When the user deletes the value from the input "posts" will evaluate
-          // to length = 0 by falling back to the original list of posts in "postSummaries"
-          // we prevent the user from having no list of posts in the UI.
-          posts={posts.length > 0 ? posts : postSummaries}
+          posts={postSummaries}
           totalPages={totalPages}
           currentPage={currentPage}
         />
