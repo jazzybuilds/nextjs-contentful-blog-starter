@@ -9,13 +9,12 @@ import MainLayout from "@layouts/main";
 import ContentWrapper from "@components/ContentWrapper";
 import PageContentWrapper from "@components/PageContentWrapper";
 import HeroBanner from "@components/HeroBanner";
-import FuzzySearch from "@components/FuzzySearch";
+import { useFuzzySearch } from "@hooks/useFuzzySearch";
 
 export default function BlogSearch(props) {
   const { posts, pageContent, preview } = props;
 
-  // Internal State to track the search results of the fuzzy search.
-  const [results, setResults] = React.useState(posts);
+  const { onReset, onSearch, results, searchValue } = useFuzzySearch(posts);
 
   /**
    * This provides some fallback values to PageMeta so that a pageContent
@@ -39,16 +38,25 @@ export default function BlogSearch(props) {
       )}
 
       <ContentWrapper>
-        <FuzzySearch onChange={setResults} posts={results} />
+        <input
+          onChange={onSearch}
+          placeholder="Search"
+          type="text"
+          value={searchValue}
+        />
         {pageContent.body && (
           <PageContentWrapper>
             <RichTextPageContent richTextBodyField={pageContent.body} />
           </PageContentWrapper>
         )}
-        {/* // When the user deletes the value from the input "posts" will evaluate
-          // to length = 0 by falling back to the original list of posts in "postSummaries"
-          // we prevent the user from having no list of posts in the UI. */}
-        <PostList posts={results.length > 0 ? results : posts} />
+        {results.length > 0 ? (
+          <PostList posts={results} />
+        ) : (
+          <div>
+            <h1>No posts found for search: {searchValue}</h1>
+            <button onClick={onReset}>Clear Search</button>
+          </div>
+        )}
       </ContentWrapper>
     </MainLayout>
   );
