@@ -42,7 +42,7 @@ export default function BlogSearch(props) {
           onChange={onSearch}
           placeholder="Search"
           type="text"
-          value={searchValue}
+          value={searchValue.value}
         />
         {pageContent.body && (
           <PageContentWrapper>
@@ -53,7 +53,7 @@ export default function BlogSearch(props) {
           <PostList posts={results} />
         ) : (
           <div>
-            <h1>No posts found for search: {searchValue}</h1>
+            <h1>No posts found for search: {searchValue.value}</h1>
             <button onClick={onReset}>Clear Search</button>
           </div>
         )}
