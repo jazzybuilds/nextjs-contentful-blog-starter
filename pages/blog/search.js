@@ -9,19 +9,21 @@ import MainLayout from "@layouts/main";
 import ContentWrapper from "@components/ContentWrapper";
 import PageContentWrapper from "@components/PageContentWrapper";
 import HeroBanner from "@components/HeroBanner";
+import { useFuzzySearch } from "@hooks/useFuzzySearch";
 
-export default function BlogIndex(props) {
-  const { postSummaries, currentPage, totalPages, pageContent, preview } =
-    props;
+export default function BlogSearch(props) {
+  const { posts, pageContent, preview } = props;
+
+  const { onReset, onSearch, results, searchValue } = useFuzzySearch(posts);
 
   /**
    * This provides some fallback values to PageMeta so that a pageContent
    * entry is not required for /blog
    */
-  const pageTitle = pageContent ? pageContent.title : "Blog";
+  const pageTitle = pageContent ? pageContent.title : "Blog Search";
   const pageDescription = pageContent
     ? pageContent.description
-    : "Articles | Next.js Contentful blog starter";
+    : "Search | Next.js Contentful blog starter";
 
   return (
     <MainLayout preview={preview}>
@@ -36,23 +38,32 @@ export default function BlogIndex(props) {
       )}
 
       <ContentWrapper>
+        <input
+          onChange={onSearch}
+          placeholder="Search"
+          type="text"
+          value={searchValue.value}
+        />
         {pageContent.body && (
           <PageContentWrapper>
             <RichTextPageContent richTextBodyField={pageContent.body} />
           </PageContentWrapper>
         )}
-        <PostList
-          posts={postSummaries}
-          totalPages={totalPages}
-          currentPage={currentPage}
-        />
+        {results.length > 0 ? (
+          <PostList posts={results} />
+        ) : (
+          <div>
+            <h1>No posts found for search: {searchValue.value}</h1>
+            <button onClick={onReset}>Clear Search</button>
+          </div>
+        )}
       </ContentWrapper>
     </MainLayout>
   );
 }
 
 export async function getStaticProps({ preview = false }) {
-  const postSummaries = await ContentfulApi.getPaginatedPostSummaries(1);
+  const posts = await ContentfulApi.getAllBlogPosts();
   const pageContent = await ContentfulApi.getPageContentBySlug(
     Config.pageMeta.blogIndex.slug,
     {
@@ -60,16 +71,10 @@ export async function getStaticProps({ preview = false }) {
     },
   );
 
-  const totalPages = Math.ceil(
-    postSummaries.total / Config.pagination.pageSize,
-  );
-
   return {
     props: {
       preview,
-      postSummaries: postSummaries.items,
-      totalPages,
-      currentPage: "1",
+      posts,
       pageContent: pageContent || null,
     },
   };
