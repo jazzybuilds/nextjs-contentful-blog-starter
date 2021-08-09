@@ -12,6 +12,7 @@ import ReactMarkdownRenderers from "@utils/ReactMarkdownRenderers";
 export default function RecentPostList(props) {
   const { posts } = props;
   console.log(props);
+  //console.log(post.contentfulMetadata.tags);
 
   return (
     <>
@@ -46,7 +47,7 @@ export default function RecentPostList(props) {
                 layout="responsive"/>
 
               </div>
-              {post.tags !== null && <Tags tags={post.tags} />}
+              {post.contentfulMetadata.tags !== null && <Tags tags={post.contentfulMetadata.tags} />}
             </article>
           </li>
         ))}
