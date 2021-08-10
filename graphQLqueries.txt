@@ -1,0 +1,24 @@
+
+
+{
+  blogPostCollection {
+    items {
+      sys {
+        id
+      }
+      contentfulMetadata {
+        tags {
+          id
+        }
+      }
+      tagsCollection{
+        items {
+          tagName
+          tag
+        }
+      }
+    }
+  }
+}
+
+
