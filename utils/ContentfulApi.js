@@ -135,6 +135,12 @@ export default class ContentfulApi {
           total
           items {
             slug
+            contentfulMetadata{
+              tags {
+                id
+                name
+              }
+            }
             }
           }
         }`;
@@ -182,6 +188,45 @@ export default class ContentfulApi {
     return returnSlugs;
   }
 
+
+
+  /**
+   * Fetch all unique blog posts tags.
+   *
+   * This method queries the GraphQL API for blog posts
+   * in batches that accounts for the query complexity cost,
+   * and returns them in one array.
+   *
+   * The array is then filtered for unique values.
+   * 
+   * For more information about GraphQL query complexity, visit:
+   * https://www.contentful.com/developers/videos/learn-graphql/#graphql-fragments-and-query-complexity
+   *
+   */
+
+
+   static async getAllUniquePostTags() {
+    let page = 1;
+    let shouldQueryMoreTags = true;
+    const returnTags = [];
+
+    while (shouldQueryMoreTags) {
+      const response = await this.getPaginatedSlugs(page);
+
+      if (response.contentfulMetadata.length > 0) {
+        returnTags.push(...response.contentfulMetadata.tags.id);
+      }
+
+      shouldQueryMoreTags = returnTags.length < response.total;
+      page++;
+    }
+
+    return returnTags;
+  }
+
+
+
+
   /**
    * Fetch a batch of blog posts (by given page number).
    *
@@ -208,11 +253,26 @@ export default class ContentfulApi {
             sys {
               id
             }
+            contentfulMetadata{
+              tags {
+                id
+                name
+              }
+            }
+            image {
+              title
+              description
+              contentType
+              fileName
+              size
+              url
+              width
+              height
+            }
             date
             title
             slug
             excerpt
-            tags
             externalUrl
             author {
               name
@@ -319,6 +379,12 @@ export default class ContentfulApi {
     return returnPosts;
   }
 
+
+
+
+
+
+
   /**
    * Fetch a single blog post by slug.
    *
@@ -353,11 +419,27 @@ export default class ContentfulApi {
           sys {
             id
           }
+          contentfulMetadata{
+            tags {
+              id
+              name
+            }
+          }
+          image {
+            title
+            description
+            contentType
+            fileName
+            size
+            url
+            width
+            height
+          }
           date
           title
           slug
           excerpt
-          tags
+          
           externalUrl
           author {
             name
@@ -464,11 +546,27 @@ export default class ContentfulApi {
             sys {
               id
             }
+            contentfulMetadata{
+              tags {
+                id
+                name
+              }
+            }
+            image {
+              title
+              description
+              contentType
+              fileName
+              size
+              url
+              width
+              height
+            }
             date
             title
             slug
             excerpt
-            tags
+            
           }
         }
       }`;
@@ -499,6 +597,7 @@ export default class ContentfulApi {
           contentfulMetadata{
             tags {
               id
+              name
             }
           }
           image {
@@ -518,7 +617,7 @@ export default class ContentfulApi {
           title
           slug
           excerpt
-          tags
+        
          
         }
       }

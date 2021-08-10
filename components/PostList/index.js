@@ -1,3 +1,4 @@
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import PublishedDate from "@components/Post/PublishedDate";
@@ -26,7 +27,15 @@ export default function PostList(props) {
                   </h2>
                 </a>
               </Link>
-              {post.tags !== null && <Tags tags={post.tags} />}
+              <div>
+              <Image
+                src={post.image.url}
+                width="1200"
+                height="400"
+                layout="responsive"/>
+
+              </div>
+              {post.contentfulMetadata.tags !== null && <Tags tags={post.contentfulMetadata.tags} />}
               <div className={ContentListStyles.contentList__excerpt}>
                 <ReactMarkdown
                   children={post.excerpt}
