@@ -245,10 +245,7 @@ export default class ContentfulApi {
     }
     let final = [...foo.values()];
 
-<<<<<<< HEAD
     const tagtotal = final.length;
-=======
->>>>>>> 6fad695fdbbeb03d7bde58323c18f80f4519bb18
 
     console.log("tags:");
     console.log(tags);
@@ -256,19 +253,13 @@ export default class ContentfulApi {
     console.log(merged);
     console.log("final:");
     console.log(final);
-<<<<<<< HEAD
     console.log("tagtotal:");
     console.log(tagtotal);
     return { final, tagtotal };
-=======
-    console.log("total:");
-    console.log(total);
-    return { tags, total };
->>>>>>> 6fad695fdbbeb03d7bde58323c18f80f4519bb18
   }
 
   /**
-   * Fetch all blog post slugs.
+   * Fetch all unique blog post tags.
    *
    * This method queries the GraphQL API for blog post slugs
    * in batches that accounts for the query complexity cost,
@@ -288,7 +279,6 @@ export default class ContentfulApi {
     let returnTags = [];
 
     while (shouldQueryMoreTags) {
-<<<<<<< HEAD
 
       const response = await this.getPaginatedUniquePostTags(page);
 
@@ -316,15 +306,6 @@ export default class ContentfulApi {
 
       // slugs: Array<string>
       if (tags.id.length > 0) {
-=======
-      const { tags, total } = await this.getPaginatedUniquePostTags(page);
-
-      console.log("const tags:");
-      console.log(tags);
-
-      // slugs: Array<string>
-      if (tags.length > 0) {
->>>>>>> 6fad695fdbbeb03d7bde58323c18f80f4519bb18
         returnTags = [...returnTags];
       }
 
