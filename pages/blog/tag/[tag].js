@@ -6,35 +6,26 @@ import MainLayout from "@layouts/main";
 import ContentWrapper from "@components/ContentWrapper";
 
 export default function PostWrapper(props) {
-  const { post, preview, posts } = props;
+  const { preview, posts } = props;
 
   return (
     <MainLayout preview={preview}>
-      <PageMeta
-        title={post.title}
-        description={post.excerpt}
-        url={`${Config.pageMeta.blogIndex.url}/${post.slug}`}
-        canonical={post.externalUrl ? post.externalUrl : false}
-      />
+      <PageMeta title={"Tag"} description={""} url={""} canonical={false} />
       <ContentWrapper>
-        <Post post={post} />
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
       </ContentWrapper>
     </MainLayout>
   );
 }
 
 export async function getStaticPaths() {
-  // Array<string>
   const blogPostTags = await ContentfulApi.getAllUniquePostTags();
 
-  console.log(blogPostTags);
-  console.log(blogPostTags[0].id);
-
-  const paths = blogPostTags.map((id) => {
-    return { params: { tag: id.toString() } };
+  const paths = blogPostTags.map(({ id }) => {
+    return { params: { tag: id } };
   });
-
-  console.log(paths);
 
   // Using fallback: "blocking" here enables preview mode for unpublished blog slugs
   // on production
@@ -46,22 +37,23 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params, preview = false }) {
   const posts = await ContentfulApi.getAllBlogPosts();
-  
-  console.log(posts);
 
-  posts = posts[0].contentfulMetadata.tags[0].id.filter(params.tag);
+  const relatedPosts = posts.reduce((acc, post) => {
+    if (
+      post.contentfulMetadata &&
+      post.contentfulMetadata.tags &&
+      post.contentfulMetadata.tags.find(({ id }) => id === params.tag)
+    ) {
+      acc.push(post);
+      return acc;
+    }
+    return acc;
+  }, []);
 
-
-  /**
-  const post = await ContentfulApi.getPostBySlug(params.id, {
-    preview: preview,
-  });
-  **/
-  
   // Add this with fallback: "blocking"
   // So that if we do not have a post on production,
   // the 404 is served
-  if (!post) {
+  if (relatedPosts.length === 0) {
     return {
       notFound: true,
     };
@@ -70,8 +62,7 @@ export async function getStaticProps({ params, preview = false }) {
   return {
     props: {
       preview,
-      post,
-      posts,
+      posts: relatedPosts,
     },
   };
 }
