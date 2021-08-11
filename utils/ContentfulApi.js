@@ -218,8 +218,6 @@ export default class ContentfulApi {
       shouldQueryMoreTags = returnTags.length < total;
       page++;
     }
-    // Array<string>
-    console.log("getAllUniquePostTags", returnTags);
     return returnTags;
   }
 

@@ -40,9 +40,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  console.log("====================================");
-  console.log("params", params);
-  console.log("====================================");
   const post = await ContentfulApi.getPostBySlug(params.tag, {
     preview: preview,
   });
