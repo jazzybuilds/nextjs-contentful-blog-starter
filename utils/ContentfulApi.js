@@ -135,12 +135,6 @@ export default class ContentfulApi {
           total
           items {
             slug
-            contentfulMetadata{
-              tags {
-                id
-                name
-              }
-            }
             }
           }
         }`;
@@ -188,22 +182,69 @@ export default class ContentfulApi {
     return returnSlugs;
   }
 
+  /**
+   * Fetch a batch of blog post slugs (by given page number).
+   *
+   * This method queries the GraphQL API for a single batch of blog post slugs.
+   *
+   * The query limit of 100 is the maximum number of slugs
+   * we can fetch with this query due to GraphQL complexity costs.
+   *
+   * For more information about GraphQL query complexity, visit:
+   * https://www.contentful.com/developers/videos/learn-graphql/#graphql-fragments-and-query-complexity
+   *
+   * param: page (number)
+   *
+   */
+   static async getPaginatedUniquePostTags(page) {
+    const queryLimit = 100;
+    const skipMultiplier = page === 1 ? 0 : page - 1;
+    const skip = skipMultiplier > 0 ? queryLimit * skipMultiplier : 0;
 
+    const query = `{
+        blogPostCollection(limit: ${queryLimit}, skip: ${skip}, order: date_DESC) {
+          total
+          items {
+            
+            contentfulMetadata{
+              tags {
+                id
+                name
+              }
+            }
+            }
+          }
+        }`;
+
+    
+        
+    const response = await this.callContentful(query);
+
+    console.log(response);
+
+    const { total } = response.data.blogPostCollection;
+    const slugs = response.data.blogPostCollection.items
+      ? response.data.blogPostCollection.items.map((item) => item.slug)
+      : [];
+
+    return { slugs, total };
+  }
 
   /**
-   * Fetch all unique blog posts tags.
+   * Fetch all blog post slugs.
    *
-   * This method queries the GraphQL API for blog posts
+   * This method queries the GraphQL API for blog post slugs
    * in batches that accounts for the query complexity cost,
    * and returns them in one array.
    *
-   * The array is then filtered for unique values.
-   * 
+   * This method is used on pages/blog/[slug] inside getStaticPaths() to
+   * generate all dynamic blog post routes.
+   *
    * For more information about GraphQL query complexity, visit:
    * https://www.contentful.com/developers/videos/learn-graphql/#graphql-fragments-and-query-complexity
    *
    */
-
+ 
 
    static async getAllUniquePostTags() {
     let page = 1;
@@ -211,9 +252,11 @@ export default class ContentfulApi {
     const returnTags = [];
 
     while (shouldQueryMoreTags) {
-      const response = await this.getPaginatedSlugs(page);
+      const response = await this.getPaginatedUniquePostTags(page);
 
-      if (response.contentfulMetadata.length > 0) {
+      console.log(response);
+
+      if (response.contentfulMetadata.tags.id > 0) {
         returnTags.push(...response.contentfulMetadata.tags.id);
       }
 
