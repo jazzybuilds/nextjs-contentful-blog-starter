@@ -6,7 +6,7 @@ import MainLayout from "@layouts/main";
 import ContentWrapper from "@components/ContentWrapper";
 
 export default function PostWrapper(props) {
-  const { post, preview } = props;
+  const { post, preview, posts } = props;
 
   return (
     <MainLayout preview={preview}>
@@ -25,11 +25,16 @@ export default function PostWrapper(props) {
 
 export async function getStaticPaths() {
   // Array<string>
-  const blogPostSlugs = await ContentfulApi.getAllUniquePostTags();
+  const blogPostTags = await ContentfulApi.getAllUniquePostTags();
 
-  const paths = blogPostSlugs.map((tag) => {
-    return { params: { tag } };
+  console.log(blogPostTags);
+  console.log(blogPostTags[0].id);
+
+  const paths = blogPostTags.map((id) => {
+    return { params: { tag: id.toString() } };
   });
+
+  console.log(paths);
 
   // Using fallback: "blocking" here enables preview mode for unpublished blog slugs
   // on production
@@ -40,10 +45,19 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  const post = await ContentfulApi.getPostBySlug(params.tag, {
+  const posts = await ContentfulApi.getAllBlogPosts();
+  
+  console.log(posts);
+
+  posts = posts[0].contentfulMetadata.tags[0].id.filter(params.tag);
+
+
+  /**
+  const post = await ContentfulApi.getPostBySlug(params.id, {
     preview: preview,
   });
-
+  **/
+  
   // Add this with fallback: "blocking"
   // So that if we do not have a post on production,
   // the 404 is served
@@ -57,6 +71,7 @@ export async function getStaticProps({ params, preview = false }) {
     props: {
       preview,
       post,
+      posts,
     },
   };
 }
