@@ -205,7 +205,7 @@ export default class ContentfulApi {
         blogPostCollection(limit: ${queryLimit}, skip: ${skip}, order: date_DESC) {
           total
           items {
-
+            
             contentfulMetadata{
               tags {
                 id
@@ -220,15 +220,9 @@ export default class ContentfulApi {
 
     console.log("reponse:");
     console.log(response);
-    console.log(
-      response.data.blogPostCollection.items[0].contentfulMetadata.tags[0].id,
-    );
-    console.log(
-      response.data.blogPostCollection.items[1].contentfulMetadata.tags[0].id,
-    );
-    console.log(
-      response.data.blogPostCollection.items[2].contentfulMetadata.tags[0].id,
-    );
+    console.log(response.data.blogPostCollection.items[0].contentfulMetadata.tags[0].id,);
+    console.log(response.data.blogPostCollection.items[1].contentfulMetadata.tags[0].id,);
+    console.log(response.data.blogPostCollection.items[2].contentfulMetadata.tags[0].id,);
 
     const { total } = response.data.blogPostCollection;
 
@@ -265,7 +259,7 @@ export default class ContentfulApi {
   }
 
   /**
-   * Fetch all blog post slugs.
+   * Fetch all unique blog post tags.
    *
    * This method queries the GraphQL API for blog post slugs
    * in batches that accounts for the query complexity cost,
@@ -285,11 +279,12 @@ export default class ContentfulApi {
     let returnTags = [];
 
     while (shouldQueryMoreTags) {
+
       const response = await this.getPaginatedUniquePostTags(page);
 
-      console.log("response:");
+      console.log('response:');
       console.log(response);
-      /**
+/**
       if (response.slugs.length > 0) {
         returnSlugs.push(...response.slugs);
       }
@@ -297,11 +292,13 @@ export default class ContentfulApi {
       returnTags.push(...response.final);
       shouldQueryMoreTags = returnTags.length < response.total;
       page++;
+
     }
 
     //return returnSlugs;
 
-    /**
+
+/**
       const { tags, total } = await this.getPaginatedUniquePostTags(page);
 
       console.log("const tags:");
@@ -323,6 +320,7 @@ export default class ContentfulApi {
     console.log(returnTags);
     return returnTags;
   }
+
 
   /**
    * Fetch a batch of blog posts (by given page number).
