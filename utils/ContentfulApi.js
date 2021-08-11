@@ -205,7 +205,7 @@ export default class ContentfulApi {
         blogPostCollection(limit: ${queryLimit}, skip: ${skip}, order: date_DESC) {
           total
           items {
-            
+
             contentfulMetadata{
               tags {
                 id
@@ -220,9 +220,15 @@ export default class ContentfulApi {
 
     console.log("reponse:");
     console.log(response);
-    console.log(response.data.blogPostCollection.items[0].contentfulMetadata.tags[0].id,);
-    console.log(response.data.blogPostCollection.items[1].contentfulMetadata.tags[0].id,);
-    console.log(response.data.blogPostCollection.items[2].contentfulMetadata.tags[0].id,);
+    console.log(
+      response.data.blogPostCollection.items[0].contentfulMetadata.tags[0].id,
+    );
+    console.log(
+      response.data.blogPostCollection.items[1].contentfulMetadata.tags[0].id,
+    );
+    console.log(
+      response.data.blogPostCollection.items[2].contentfulMetadata.tags[0].id,
+    );
 
     const { total } = response.data.blogPostCollection;
 
@@ -245,10 +251,7 @@ export default class ContentfulApi {
     }
     let final = [...foo.values()];
 
-<<<<<<< HEAD
     const tagtotal = final.length;
-=======
->>>>>>> 6fad695fdbbeb03d7bde58323c18f80f4519bb18
 
     console.log("tags:");
     console.log(tags);
@@ -256,15 +259,9 @@ export default class ContentfulApi {
     console.log(merged);
     console.log("final:");
     console.log(final);
-<<<<<<< HEAD
     console.log("tagtotal:");
     console.log(tagtotal);
     return { final, tagtotal };
-=======
-    console.log("total:");
-    console.log(total);
-    return { tags, total };
->>>>>>> 6fad695fdbbeb03d7bde58323c18f80f4519bb18
   }
 
   /**
@@ -288,13 +285,11 @@ export default class ContentfulApi {
     let returnTags = [];
 
     while (shouldQueryMoreTags) {
-<<<<<<< HEAD
-
       const response = await this.getPaginatedUniquePostTags(page);
 
-      console.log('response:');
+      console.log("response:");
       console.log(response);
-/**
+      /**
       if (response.slugs.length > 0) {
         returnSlugs.push(...response.slugs);
       }
@@ -302,13 +297,11 @@ export default class ContentfulApi {
       returnTags.push(...response.final);
       shouldQueryMoreTags = returnTags.length < response.total;
       page++;
-
     }
 
     //return returnSlugs;
 
-
-/**
+    /**
       const { tags, total } = await this.getPaginatedUniquePostTags(page);
 
       console.log("const tags:");
@@ -316,15 +309,6 @@ export default class ContentfulApi {
 
       // slugs: Array<string>
       if (tags.id.length > 0) {
-=======
-      const { tags, total } = await this.getPaginatedUniquePostTags(page);
-
-      console.log("const tags:");
-      console.log(tags);
-
-      // slugs: Array<string>
-      if (tags.length > 0) {
->>>>>>> 6fad695fdbbeb03d7bde58323c18f80f4519bb18
         returnTags = [...returnTags];
       }
 
@@ -339,7 +323,6 @@ export default class ContentfulApi {
     console.log(returnTags);
     return returnTags;
   }
-
 
   /**
    * Fetch a batch of blog posts (by given page number).
