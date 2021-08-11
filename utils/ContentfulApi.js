@@ -188,8 +188,6 @@ export default class ContentfulApi {
     return returnSlugs;
   }
 
-
-
   /**
    * Fetch all unique blog posts tags.
    *
@@ -198,34 +196,32 @@ export default class ContentfulApi {
    * and returns them in one array.
    *
    * The array is then filtered for unique values.
-   * 
+   *
    * For more information about GraphQL query complexity, visit:
    * https://www.contentful.com/developers/videos/learn-graphql/#graphql-fragments-and-query-complexity
    *
    */
 
-
-   static async getAllUniquePostTags() {
+  static async getAllUniquePostTags() {
     let page = 1;
     let shouldQueryMoreTags = true;
-    const returnTags = [];
+    let returnTags = [];
 
     while (shouldQueryMoreTags) {
-      const response = await this.getPaginatedSlugs(page);
+      const { slugs, total } = await this.getPaginatedSlugs(page);
 
-      if (response.contentfulMetadata.length > 0) {
-        returnTags.push(...response.contentfulMetadata.tags.id);
+      // slugs: Array<string>
+      if (slugs.length > 0) {
+        returnTags = [...returnTags, ...slugs];
       }
 
-      shouldQueryMoreTags = returnTags.length < response.total;
+      shouldQueryMoreTags = returnTags.length < total;
       page++;
     }
-
+    // Array<string>
+    console.log("getAllUniquePostTags", returnTags);
     return returnTags;
   }
-
-
-
 
   /**
    * Fetch a batch of blog posts (by given page number).
@@ -379,12 +375,6 @@ export default class ContentfulApi {
     return returnPosts;
   }
 
-
-
-
-
-
-
   /**
    * Fetch a single blog post by slug.
    *
@@ -439,7 +429,7 @@ export default class ContentfulApi {
           title
           slug
           excerpt
-          
+
           externalUrl
           author {
             name
@@ -566,7 +556,7 @@ export default class ContentfulApi {
             title
             slug
             excerpt
-            
+
           }
         }
       }`;
@@ -617,8 +607,8 @@ export default class ContentfulApi {
           title
           slug
           excerpt
-        
-         
+
+
         }
       }
     }`;
@@ -628,7 +618,6 @@ export default class ContentfulApi {
     const recentPosts = response.data.blogPostCollection.items
       ? response.data.blogPostCollection.items
       : [];
-    //console.log(recentPosts);
     return recentPosts;
   }
 
