@@ -196,7 +196,7 @@ export default class ContentfulApi {
    * param: page (number)
    *
    */
-   static async getPaginatedUniquePostTags(page) {
+  static async getPaginatedUniquePostTags(page) {
     const queryLimit = 100;
     const skipMultiplier = page === 1 ? 0 : page - 1;
     const skip = skipMultiplier > 0 ? queryLimit * skipMultiplier : 0;
@@ -216,18 +216,46 @@ export default class ContentfulApi {
           }
         }`;
 
-    
-        
     const response = await this.callContentful(query);
 
+    console.log("reponse:");
     console.log(response);
+    console.log(response.data.blogPostCollection.items[0].contentfulMetadata.tags[0].id,);
+    console.log(response.data.blogPostCollection.items[1].contentfulMetadata.tags[0].id,);
+    console.log(response.data.blogPostCollection.items[2].contentfulMetadata.tags[0].id,);
 
     const { total } = response.data.blogPostCollection;
-    const slugs = response.data.blogPostCollection.items
-      ? response.data.blogPostCollection.items.map((item) => item.slug)
-      : [];
 
-    return { slugs, total };
+    const tags = response.data.blogPostCollection.items
+      ? response.data.blogPostCollection.items.map(
+          (item) =>
+            // function(item.contentfulMetadata.tags) {
+            //return
+            item.contentfulMetadata.tags.map((item2) => item2),
+          //}
+        )
+      : //(item) => item.contentfulMetadata.tags[0].id)
+        [];
+
+    var merged = [].concat.apply([], tags);
+
+    let foo = new Map();
+    for (const val of merged) {
+      foo.set(val.id, val);
+    }
+    let final = [...foo.values()];
+
+    const tagtotal = final.length;
+
+    console.log("tags:");
+    console.log(tags);
+    console.log("merged:");
+    console.log(merged);
+    console.log("final:");
+    console.log(final);
+    console.log("tagtotal:");
+    console.log(tagtotal);
+    return { final, tagtotal };
   }
 
   /**
@@ -244,30 +272,54 @@ export default class ContentfulApi {
    * https://www.contentful.com/developers/videos/learn-graphql/#graphql-fragments-and-query-complexity
    *
    */
- 
 
-   static async getAllUniquePostTags() {
+  static async getAllUniquePostTags() {
     let page = 1;
     let shouldQueryMoreTags = true;
-    const returnTags = [];
+    let returnTags = [];
 
     while (shouldQueryMoreTags) {
+
       const response = await this.getPaginatedUniquePostTags(page);
 
+      console.log('response:');
       console.log(response);
-
-      if (response.contentfulMetadata.tags.id > 0) {
-        returnTags.push(...response.contentfulMetadata.tags.id);
+/**
+      if (response.slugs.length > 0) {
+        returnSlugs.push(...response.slugs);
       }
-
+**/
+      returnTags.push(...response.final);
       shouldQueryMoreTags = returnTags.length < response.total;
       page++;
+
     }
 
+    //return returnSlugs;
+
+
+/**
+      const { tags, total } = await this.getPaginatedUniquePostTags(page);
+
+      console.log("const tags:");
+      console.log(tags);
+
+      // slugs: Array<string>
+      if (tags.id.length > 0) {
+        returnTags = [...returnTags];
+      }
+
+      console.log("returnTags:");
+      console.log(returnTags);
+
+      shouldQueryMoreTags = returnTags.length < total;
+      page++;
+    }
+**/
+    console.log("returnTags:");
+    console.log(returnTags);
     return returnTags;
   }
-
-
 
 
   /**
@@ -422,12 +474,6 @@ export default class ContentfulApi {
     return returnPosts;
   }
 
-
-
-
-
-
-
   /**
    * Fetch a single blog post by slug.
    *
@@ -482,7 +528,7 @@ export default class ContentfulApi {
           title
           slug
           excerpt
-          
+
           externalUrl
           author {
             name
@@ -609,7 +655,7 @@ export default class ContentfulApi {
             title
             slug
             excerpt
-            
+
           }
         }
       }`;
@@ -660,8 +706,8 @@ export default class ContentfulApi {
           title
           slug
           excerpt
-        
-         
+
+
         }
       }
     }`;
@@ -671,7 +717,6 @@ export default class ContentfulApi {
     const recentPosts = response.data.blogPostCollection.items
       ? response.data.blogPostCollection.items
       : [];
-    //console.log(recentPosts);
     return recentPosts;
   }
 
