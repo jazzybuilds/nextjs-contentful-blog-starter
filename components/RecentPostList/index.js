@@ -11,8 +11,6 @@ import ReactMarkdownRenderers from "@utils/ReactMarkdownRenderers";
 
 export default function RecentPostList(props) {
   const { posts } = props;
-  console.log(props);
-  //console.log(post.contentfulMetadata.tags);
 
   return (
     <>
@@ -31,23 +29,25 @@ export default function RecentPostList(props) {
                   </h2>
                 </a>
               </Link>
-              
+
               <div className={ContentListStyles.contentList__excerpt}>
                 <ReactMarkdown
                   children={post.excerpt}
                   renderers={ReactMarkdownRenderers(post.excerpt)}
                 />
               </div>
-          
-              <div>
-              <Image
-                src={post.image.url}
-                width="1200"
-                height="400"
-                layout="responsive"/>
 
+              <div>
+                <Image
+                  src={post.image.url}
+                  width="1200"
+                  height="400"
+                  layout="responsive"
+                />
               </div>
-              {post.contentfulMetadata.tags !== null && <Tags tags={post.contentfulMetadata.tags} />}
+              {post.contentfulMetadata.tags !== null && (
+                <Tags tags={post.contentfulMetadata.tags} />
+              )}
             </article>
           </li>
         ))}
