@@ -24,10 +24,11 @@ export default function PostWrapper(props) {
 }
 
 export async function getStaticPaths() {
+  // Array<string>
   const blogPostSlugs = await ContentfulApi.getAllUniquePostTags();
 
-  const paths = blogPostSlugs.map((tags) => {
-    return { params: { tags } };
+  const paths = blogPostSlugs.map((tag) => {
+    return { params: { tag } };
   });
 
   // Using fallback: "blocking" here enables preview mode for unpublished blog slugs
@@ -39,7 +40,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  const post = await ContentfulApi.getPostBySlug(params.slug, {
+  console.log("====================================");
+  console.log("params", params);
+  console.log("====================================");
+  const post = await ContentfulApi.getPostBySlug(params.tag, {
     preview: preview,
   });
 
