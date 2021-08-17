@@ -3,7 +3,6 @@
 [[redirects]]
 	from = '/redirect/*'
 	to = 'https://www.guidedogs.org.uk'
-	status = 200
 
 	
 
