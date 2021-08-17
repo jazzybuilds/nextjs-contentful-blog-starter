@@ -14,6 +14,12 @@
 	
 
 [[redirects]]
+  from = '/aboutus'
+  to = 'https://www.guidedogs.org.uk/about-us/'
+  status = 200
+ 
+ 
+[[redirects]]
   from = "/api-fe/*"
   to = "/.netlify/functions/:splat"
   status = 200
