@@ -44,7 +44,7 @@ export default function BlogSearch(props) {
           type="text"
           value={searchValue}
         />
-        <a href="https://angry-shockley-04ec06.netlify.app">
+        <a href="https://angry-shockley-04ec06.netlify.app/clone">
         clone link
         </a>
         {pageContent.body && (
