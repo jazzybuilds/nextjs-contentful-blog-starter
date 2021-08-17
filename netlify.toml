@@ -1,0 +1,14 @@
+
+# Proxy for media items
+[[redirects]]
+	from = '/redirect/*'
+	to = 'https://www.guidedogs.org.uk'
+	status = 200
+	force = true
+	
+  
+[[redirects]]
+  from = "/api-fe/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  
