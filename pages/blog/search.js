@@ -44,9 +44,14 @@ export default function BlogSearch(props) {
           type="text"
           value={searchValue}
         />
+        
         <a href="/clone">
-        clone link
+        link to sitecore page
         </a>
+        <a href="/aboutus">
+        link to guidedogs about us page
+        </a>
+
         {pageContent.body && (
           <PageContentWrapper>
             <RichTextPageContent richTextBodyField={pageContent.body} />
