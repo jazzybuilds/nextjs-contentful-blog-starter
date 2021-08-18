@@ -9,6 +9,7 @@
   from = '/clone'
   to = 'https://gd-dev-origin.guidedogs.org.uk/how-you-can-help/how-your-school-or-youth-group-can-help/stem-projects/stem-thank-you'
   status = 200
+  force = true
   [redirects.headers]
       Authorization = "Basic Z3VpZGVkb2dzOmM4N2J0R0hRWUhVWENqc1FNQTV5dHRKWg=="	
 	
@@ -17,8 +18,9 @@
   from = '/aboutus'
   to = 'https://www.guidedogs.org.uk/about-us/'
   status = 200
+  force = true
  
- 
+
 [[redirects]]
   from = "/api-fe/*"
   to = "/.netlify/functions/:splat"
