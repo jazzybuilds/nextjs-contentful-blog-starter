@@ -1,6 +1,5 @@
 import ContentfulApi from "@utils/ContentfulApi";
 import Post from "@components/Post";
-import PostTagEntry from "@components/PostTagEntry";
 import { Config } from "@utils/Config";
 import PageMeta from "@components/PageMeta";
 import MainLayout from "@layouts/main";

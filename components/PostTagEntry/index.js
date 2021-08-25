@@ -1,6 +1,4 @@
-import {FastCommentsCommentWidget} from 'fastcomments-react'
-import HyvorTalk from 'hyvor-talk-react'
-import { DiscussionEmbed } from "disqus-react";
+import { DiscussionEmbed } from 'disqus-react';
 import RichTextPageContentStyles from "@styles/RichTextPageContent.module.css";
 import TypographyStyles from "@styles/Typography.module.css";
 import Tags from "@components/Post/Tags";
@@ -16,31 +14,24 @@ export default function Post(props) {
     <article className={RichTextPageContentStyles.page}>
       {post.externalUrl && <ExternalUrl url={post.externalUrl} />}
       <PublishedDate date={post.date} />
-      {post.contentfulMetadata.tags !== null && (
-        <Tags tags={post.contentfulMetadata.tags} />
-      )}{" "}
-      <h1 className={TypographyStyles.heading__h1}>{post.title}</h1>
+{post.contentfulMetadata.tags !== null && <Tags tags={post.contentfulMetadata.tags} />}      <h1 className={TypographyStyles.heading__h1}>{post.title}</h1>
       <RichTextPageContent richTextBodyField={post.body} renderH2Links={true} />
       {post.author !== null && <Author author={post.author} />}
+      
+    
       <DiscussionEmbed
-        shortname="guidedogsdev"
-        config={{
-          url: post.url,
-          identifier: post.id,
-          title: post.title,
-        }}
-      />
-      <HyvorTalk.Embed 
-          websiteId={4965}
-         
-        />
-
-<FastCommentsCommentWidget tenantId="asrI7io1mv" />
-
-
-
-
-
+    shortname='guidedogsdev'
+    config={
+        {
+            url: post.url,
+            identifier: post.id,
+            title: post.title,
+        }
+    }
+/>
     </article>
+    
+    
+
   );
 }

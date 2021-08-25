@@ -1652,6 +1652,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+disqus-react@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/disqus-react/-/disqus-react-1.1.1.tgz#48b3cd10eb6056a875c1bb047dd87c21c02bfda4"
+  integrity sha512-Ob6/3l3WQb682RLplStVZsvRbGnD2DdppmwmHZ3PO7JNyLZfdldKGXnotm0ZhdTCX6DM8oE4Bpr08cSymBIdzg==
+
 dom-accessibility-api@^0.5.6:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.5.6.tgz#3f5d43b52c7a3bd68b5fb63fa47b4e4c1fdf65a9"
@@ -1904,6 +1909,11 @@ fast-levenshtein@~2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+
+fastcomments-react@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/fastcomments-react/-/fastcomments-react-2.0.1.tgz#a87e03221c98ab9b7718975f1557274e50cb76c3"
+  integrity sha512-eC7Q/Nxix2ruWkGiWyKMLj5/8l46hTjkRPExW7axOlZ2ufVkZHr7OkmcJbCmU2wn7X0ibfjEv0PdXDiUUzP6+Q==
 
 fb-watchman@^2.0.0:
   version "2.0.1"
@@ -2172,6 +2182,11 @@ human-signals@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
+
+hyvor-talk-react@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/hyvor-talk-react/-/hyvor-talk-react-1.0.3.tgz#0f5561519971ff885412361ec349c0ffdcf845a0"
+  integrity sha512-r5iv5kX2ZrHUCGPSsfNhPDY/+YjP7TGJZ2uJJm1/xayBbQLV/QiYEBOABNJojZ39kH4NZVvVx3kS5ljmK280nQ==
 
 iconv-lite@0.4.24:
   version "0.4.24"
