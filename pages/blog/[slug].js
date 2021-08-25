@@ -18,6 +18,7 @@ export default function PostWrapper(props) {
       />
       <ContentWrapper>
         <Post post={post} />
+        
       </ContentWrapper>
     </MainLayout>
   );
