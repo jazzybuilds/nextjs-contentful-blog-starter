@@ -5,6 +5,14 @@ import { Config } from "@utils/Config";
 import PageMeta from "@components/PageMeta";
 import MainLayout from "@layouts/main";
 import ContentWrapper from "@components/ContentWrapper";
+import ContentListStyles from "@styles/ContentList.module.css";
+import PublishedDate from "@components/Post/PublishedDate";
+import Link from "next/link";
+import ReactMarkdownRenderers from "@utils/ReactMarkdownRenderers";
+import ReactMarkdown from "react-markdown";
+import Image from "next/image";
+import Tags from "@components/Post/Tags";
+
 
 export default function PostWrapper(props) {
   const { preview, posts } = props;
@@ -13,9 +21,41 @@ export default function PostWrapper(props) {
     <MainLayout preview={preview}>
       <PageMeta title={"Tag"} description={""} url={""} canonical={false} />
       <ContentWrapper>
+      <ol className={ContentListStyles.contentList}>
         {posts.map((post) => (
-          <Post key={post.id} post={post} />
+          <li key={post.sys.id}>
+            <article className={ContentListStyles.contentList__post}>
+              <PublishedDate date={post.date} />
+              <Link href={`/blog/${post.slug}`}>
+                <a className={ContentListStyles.contentList__titleLink}>
+                  <h2 className={ContentListStyles.contentList__title}>
+                    {post.title}
+                  </h2>
+                </a>
+              </Link>
+
+              <div className={ContentListStyles.contentList__excerpt}>
+                <ReactMarkdown
+                  children={post.excerpt}
+                  renderers={ReactMarkdownRenderers(post.excerpt)}
+                />
+              </div>
+
+              <div>
+                <Image
+                  src={post.image.url}
+                  width="1200"
+                  height="400"
+                  layout="responsive"
+                />
+              </div>
+              {post.contentfulMetadata.tags !== null && (
+                <Tags tags={post.contentfulMetadata.tags} />
+              )}
+            </article>
+          </li>
         ))}
+      </ol>
       </ContentWrapper>
     </MainLayout>
   );
