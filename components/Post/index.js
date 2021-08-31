@@ -22,20 +22,20 @@ export default function Post(props) {
       <h1 className={TypographyStyles.heading__h1}>{post.title}</h1>
       <RichTextPageContent richTextBodyField={post.body} renderH2Links={true} />
       {post.author !== null && <Author author={post.author} />}
-      <DiscussionEmbed
+      {/*<DiscussionEmbed
         shortname="guidedogsdev"
         config={{
           url: post.url,
           identifier: post.id,
           title: post.title,
         }}
-      />
+      />*/}
       <HyvorTalk.Embed 
           websiteId={4965}
          
         />
 
-<FastCommentsCommentWidget tenantId="asrI7io1mv" />
+{/*<FastCommentsCommentWidget tenantId="asrI7io1mv" />*/}
 
 
 
