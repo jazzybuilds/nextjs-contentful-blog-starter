@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { pageView } from "../../lib/gtm";
 
-const GTM: React.FC = ({ children }) => {
+const GTM = ({ children }) => {
   const { events } = useRouter();
 
   React.useEffect(() => {
