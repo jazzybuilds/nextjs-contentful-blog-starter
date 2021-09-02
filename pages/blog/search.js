@@ -1,4 +1,5 @@
 import * as React from "react";
+import NextLink from "next/link";
 
 import ContentfulApi from "@utils/ContentfulApi";
 import { Config } from "@utils/Config";
@@ -44,13 +45,14 @@ export default function BlogSearch(props) {
           type="text"
           value={searchValue}
         />
-        
-        <a href="/clone">
-        link to sitecore page
-        </a>
-        <a href="/aboutus">
-        link to guidedogs about us page
-        </a>
+
+        <NextLink href="/clone" passHref>
+          <a>link to sitecore page</a>
+        </NextLink>
+
+        <NextLink href="/aboutus" passHref>
+          <a>link to guidedogs about us page</a>
+        </NextLink>
 
         {pageContent.body && (
           <PageContentWrapper>
