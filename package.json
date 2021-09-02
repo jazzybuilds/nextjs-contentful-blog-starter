@@ -17,6 +17,7 @@
     "@contentful/rich-text-react-renderer": "^14.1.2",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "disqus-react": "^1.1.2",
     "fastcomments-react": "^2.0.1",
     "framer-motion": "^4.1.17",
     "fuse.js": "~6.4.6",
