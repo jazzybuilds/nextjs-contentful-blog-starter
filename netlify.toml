@@ -1,5 +1,12 @@
 
 # Proxy for media items
+
+[[redirects]]
+	from = '/blog/*'
+	to = 'https://blog.guidedogs.org.uk'
+	status = 200
+
+
 [[redirects]]
 	from = '/redirect/*'
 	to = 'https://www.guidedogs.org.uk'
