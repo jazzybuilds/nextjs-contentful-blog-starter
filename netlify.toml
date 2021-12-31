@@ -11,6 +11,17 @@
 	from = '/rewrite/*'
 	to = 'https://gd-blog.netlify.app/:splat'
 	status = 200
+	
+	
+[[redirects]]
+	from = '/rewrite2/*'
+	to = 'https://gd-dev-origin.guidedogs.org.uk/how-you-can-help/how-your-school-or-youth-group-can-help/stem-projects/stem-thank-you'
+	status = 200
+	
+[[redirects]]
+	from = '/rewrite3/*'
+	to = 'https://gd-blog.netlify.app/blog/:splat'
+	status = 200
 
 [[redirects]]
   from = '/clone'
