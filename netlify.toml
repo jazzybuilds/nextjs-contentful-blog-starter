@@ -9,7 +9,7 @@
 
 [[redirects]]
 	from = '/rewrite/*'
-	to = 'https://blog.guidedogs.org.uk'
+	to = 'https://gd-blog.netlify.app'
 	status = 200
 
 [[redirects]]
