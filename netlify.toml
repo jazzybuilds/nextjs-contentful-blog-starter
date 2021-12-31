@@ -9,7 +9,7 @@
 
 [[redirects]]
 	from = '/rewrite/*'
-	to = 'https://gd-blog.netlify.app'
+	to = 'https://gd-blog.netlify.app/:splat'
 	status = 200
 
 [[redirects]]
